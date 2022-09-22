@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dangrek&display=swap');
+
+.root {
+    background-color: rgb(155, 164, 172);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    background-color: rgb(224, 222, 222);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 810px;
+    width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    border: solid 10px rgb(37, 36, 36);
+    border-radius: 10px;
+}
+
+.nome-img {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 400px;
+    margin-bottom: 20px;
+}
+
+.nome-img img {
+    height: 80px;
+}
+
+.nome-img span {
+    font-weight: bold;
+    font-size: 40px;
+    font-family: 'RocknRoll One';
+    color: rgb(63, 62, 62);
+}
+
+.forcaImg{
+    width: 300px;
+}
+
+.btnEscolher {
+    background-color: rgb(38, 175, 96);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: large;
+    font-weight: bold;
+    height: 45px;
+    width: 160px; 
+    border: none;
+    border-radius: 5px;
+    margin-top: 26px;
+    cursor: pointer;
+    position: absolute;
+    right: 25px;
+    top: -5px;
+}
+
+.top-content {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin-bottom: 40px;
+    margin-top: 10px;
+}
+
+.direita {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.palavra-secreta {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    letter-spacing: 15px;
+    font-weight: 500;
+    font-size: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+    margin-left: 80px;
+}
+
+.teclado {
+    background-color: rgb(107, 106, 107);
+    box-sizing: border-box;
+    width: 91%;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 35px;
+    padding: 10px;
+    border-radius: 8px;
+    border: solid 1px rgb(73, 73, 73);
+
+}
+
+.teclaOff{
+    color: rgb(107, 105, 103);
+    background-color: rgb(141, 157, 163);
+    border: none;
+    cursor: default;
+    height: 45px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    font-size: large;
+}
+
+.teclaOn {
+    color: rgb(76, 112, 145);
+    background-color: rgb(224, 236, 243);
+    cursor: pointer;
+    border-color: rgb(173, 203, 225);
+    height: 45px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    font-size: large;
+}
+
+.hide {
+    display: none;
+}
+
+.chute {
+    width: 90%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.chute span {
+    font-size: 18px;
+    cursor: default;
+    margin-left: 30px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.chute input {
+    width: 60%;
+    height: 90%;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'RocknRoll One', sans-serif;
+}
+
+.chute button {
+    cursor: pointer;
+    width: 100px;
+    height: 100%;
+    font-family: 'RocknRoll One', sans-serif;
+    margin-right: 20px;
+    border-radius: 10px;
+    border-color: rgb(173, 203, 225);
+    color: rgb(76, 112, 145);
+    background-color: rgb(224, 236, 243);
+}
