@@ -10,6 +10,8 @@ import img4 from "./images/forca4.png";
 import img5 from "./images/forca5.png";
 import img6 from "./images/forca6.png";
 
+let variavel = [];
+
 export default function App() {
     const [listKeys, setListKeys] = useState([])
     const [listLetters, setListLetters] = useState([])    
@@ -27,10 +29,11 @@ export default function App() {
     const [inputValue, setInputValue] = useState('')
     let palavraSemAcentos = palavraRandom.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
     let arrayTraço = [];
-
+    console.log(palavraRandom)
+    
     if(erros !== undefined) {
         arrayCaracteres.map((letra) => {
-            if(listLetters.includes(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))) {
+            if(variavel.includes(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))) {
                 arrayTraço.push(letra)
             } else {
                 arrayTraço.push("_")
@@ -39,7 +42,6 @@ export default function App() {
         });
         
     }
-    console.log(arrayTraço.join(""))
 
     function startGame() {
         if(erros === undefined && indice === 0 && statusKeyboard === true){
@@ -81,7 +83,8 @@ export default function App() {
             }
 
             if(erros !== undefined && arrayCaracteresSemAcento.includes(letra)){
-                setListLetters([...listLetters, letra])
+                variavel = [...listLetters, letra]
+                setListLetters(variavel)
                 setAcertos(acertos += 1)
             } else if(erros !== undefined && !arrayCaracteresSemAcento.includes(letra)) {
                 setErros(erros += 1)
@@ -95,8 +98,9 @@ export default function App() {
                     default: break;
                 }
             }
-
-            if(arrayTraço.join('') === palavraRandom) {
+            
+            const palavraAtual = palavraRandom.split("").map(e => variavel.includes(e.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) ? e : "_").join("");
+            if (palavraAtual === palavraRandom){
                 setClass(palavraSecretaClass = "ganhou");
                 setBtnEscolher(btnEscolher = "Nova Palavra"); 
                 setStatusKeyboard(statusKeyboard = true)
