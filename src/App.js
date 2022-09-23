@@ -118,7 +118,7 @@ export default function App() {
         setInputValue('')
         if(palavraChutada === '') {
             alert("Escreva algo antes de chutar")
-        } else if(palavraChutada === palavraRandom || palavraChutada === palavraSemAcentos) {
+        } else if(palavraChutada.toLowerCase()  === palavraRandom || palavraChutada.toLowerCase() === palavraSemAcentos) {
             setClass(palavraSecretaClass = "ganhou");
             setBtnEscolher(btnEscolher = "Nova Palavra"); 
             setStatusKeyboard(statusKeyboard = true)

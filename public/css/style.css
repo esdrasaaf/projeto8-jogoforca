@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dangrek&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap%27');
 
 .root {
     background-color: rgb(155, 164, 172);
@@ -184,7 +185,7 @@
     font-size: 18px;
     cursor: default;
     margin-left: 30px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Varela Round', sans-serif;
 }
 
 .chute input {
@@ -200,7 +201,9 @@
     cursor: pointer;
     width: 100px;
     height: 100%;
-    font-family: 'RocknRoll One', sans-serif;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
     margin-right: 20px;
     border-radius: 10px;
     border-color: rgb(173, 203, 225);
