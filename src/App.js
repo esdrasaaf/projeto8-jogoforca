@@ -11,73 +11,124 @@ import img5 from "./images/forca5.png";
 import img6 from "./images/forca6.png";
 
 export default function App() {
-    let [statusKeyboard, setStatusKeyboard] = useState(true)
     const [listKeys, setListKeys] = useState([])
-    const [listLetters, setListLetters] = useState([])
-
-    let [btnEscolher, setBtnEscolher] = useState("Escolher palavra")
-    let [traçoLetra, setTraçoLetra] = useState("_")
-    let [palavraSecretaClass, setClass] = useState("hide")
+    const [listLetters, setListLetters] = useState([])    
     let [statusImg, setStatusImg] = useState(img0)
+    let [statusKeyboard, setStatusKeyboard] = useState(true)
+    let [statusInput, setStatusInput] = useState(true)
+    let [btnEscolher, setBtnEscolher] = useState("Escolher palavra")
+    let [palavraSecretaClass, setClass] = useState("hide")
     let [indice, setIndice] = useState(0)
     let [erros, setErros] = useState()
+    let [acertos, setAcertos] = useState()
+    let palavraRandom = palavras[indice]
+    let arrayCaracteres = palavraRandom.split('')
+    const arrayCaracteresSemAcento = []
+    const [inputValue, setInputValue] = useState('')
+    let palavraSemAcentos = palavraRandom.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+    let arrayTraço = [];
+
+    if(erros !== undefined) {
+        arrayCaracteres.map((letra) => {
+            if(listLetters.includes(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))) {
+                arrayTraço.push(letra)
+            } else {
+                arrayTraço.push("_")
+            }
+            return "oi"
+        });
+        
+    }
+    console.log(arrayTraço.join(""))
 
     function startGame() {
         if(erros === undefined && indice === 0 && statusKeyboard === true){
             setClass(palavraSecretaClass = "palavra-secreta")
             setStatusKeyboard(statusKeyboard = false)
+            setStatusInput(statusInput = false)
             setIndice(indice = Math.floor(Math.random() * palavras.length))
             setErros(erros = 0)
+            setAcertos(0)
             setBtnEscolher(btnEscolher = "Mudar palavra")
-            PalavraSorteada()
         } else if (erros !== undefined){
-             setStatusImg(statusImg = img0)
-             setIndice(indice = Math.floor(Math.random() * palavras.length))
-             setStatusKeyboard(statusKeyboard = false)
-             setListKeys([])
-             setErros(erros = 0)
-            PalavraSorteada()
-        }   //Parte de resetar o game//
+            setStatusImg(statusImg = img0)
+            setIndice(indice = Math.floor(Math.random() * palavras.length))
+            setStatusKeyboard(statusKeyboard = false)
+            setStatusInput(statusInput = false)
+            setListKeys([])
+            setListLetters([])
+            setErros(erros = 0)
+            setAcertos(0)
+            if (btnEscolher === "Tentar Novamente") {
+                setBtnEscolher(btnEscolher = "Mudar palavra")
+                setClass(palavraSecretaClass = "palavra-secreta")
+            } else if (btnEscolher === "Nova Palavra") {
+                setBtnEscolher(btnEscolher = "Mudar palavra")
+                setClass(palavraSecretaClass = "palavra-secreta")
+            }
+        }
     }    
-
-    function PalavraSorteada() {
-        let palavraRandom = palavras[indice]
-        let arrayCaracteres = palavraRandom.split('');
-        
-        return (<ul data-identifier="word" className={palavraSecretaClass} >{arrayCaracteres.map((letra, index) => <li key={index}>{traçoLetra}</li>)}</ul>)
-    }
     
     function click(letra, index) {
-        let palavraRandom = palavras[indice]
-
-        //Click com teclado desabilitado
-        if(erros === undefined) {alert("Escolha uma palavra primeiro")} 
 
         //Click de apagar a tecla
         if (erros !== undefined && !listKeys.includes(index)) {
             setListKeys([...listKeys, index])
-            console.log(palavraRandom)
 
-            //Click de acerto e Erro
-            if (erros !== undefined && palavraRandom.includes(letra) && listKeys.includes(index)){
-                console.log(palavraRandom)
-                setListLetters([])
-            } else if(erros !== undefined && !palavraRandom.includes(letra)) {
+            //Click de acerto e Erro ; Quando perde
+            for(let i = 0; i < arrayCaracteres.length; i++){        
+                arrayCaracteresSemAcento.push(arrayCaracteres[i].normalize('NFD').replace(/[\u0300-\u036f]/g, ""))
+            }
+
+            if(erros !== undefined && arrayCaracteresSemAcento.includes(letra)){
+                setListLetters([...listLetters, letra])
+                setAcertos(acertos += 1)
+            } else if(erros !== undefined && !arrayCaracteresSemAcento.includes(letra)) {
                 setErros(erros += 1)
-                console.log(erros)
                 switch (erros) {
                     case 1: setStatusImg(statusImg = img1); break;
                     case 2: setStatusImg(statusImg = img2); break;
                     case 3: setStatusImg(statusImg = img3); break;
                     case 4: setStatusImg(statusImg = img4); break;
                     case 5: setStatusImg(statusImg = img5); break;
-                    case 6: setStatusImg(statusImg = img6); console.log("Você perdeu"); break;
+                    case 6: setStatusImg(statusImg = img6); setBtnEscolher(btnEscolher = "Tentar Novamente"); setClass(palavraSecretaClass = "perdeu"); arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))}); setStatusInput(statusInput = true); setStatusKeyboard(statusKeyboard = true); break;
                     default: break;
                 }
             }
-        } 
+
+            if(arrayTraço.join('') === palavraRandom) {
+                setClass(palavraSecretaClass = "ganhou");
+                setBtnEscolher(btnEscolher = "Nova Palavra"); 
+                setStatusKeyboard(statusKeyboard = true)
+                setStatusInput(statusInput = true)
+                arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))})
+                setListKeys([])
+            }            
+        }
     }
 
+    function verificaChute() {
+        const palavraChutada = inputValue
+        setInputValue('')
+        if(palavraChutada === '') {
+            alert("Escreva algo antes de chutar")
+        } else if(palavraChutada === palavraRandom || palavraChutada === palavraSemAcentos) {
+            setClass(palavraSecretaClass = "ganhou");
+            setBtnEscolher(btnEscolher = "Nova Palavra"); 
+            setStatusKeyboard(statusKeyboard = true)
+            setStatusInput(statusInput = true)
+            arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))})
+            setListKeys([])
+        } else {
+            setStatusImg(statusImg = img6);
+            setBtnEscolher(btnEscolher = "Tentar Novamente"); 
+            setClass(palavraSecretaClass = "perdeu"); 
+            arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))});
+            setListKeys([])
+            setStatusKeyboard(statusKeyboard = true)
+            setStatusInput(statusInput = true)
+        } 
+    }
 
     return (
         <div className="content">
@@ -90,16 +141,16 @@ export default function App() {
                 <img data-identifier="game-image" className="forcaImg" src={statusImg} alt="Imagem de uma forca"/>
                 <div className="direita">
                     <button data-identifier="choose-word" className="btnEscolher" onClick={startGame}>{btnEscolher}</button>
-                    <PalavraSorteada />
+                    <ul data-identifier="word" className = {palavraSecretaClass} >{arrayCaracteres.map((letra, index) => <li className={index} key={index}>{listLetters.includes(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) ? `${letra}` : "_"}</li>)}</ul>
                 </div>
             </div>
 
-            <div className="teclado">{alfabeto.map((letra, index) => <button data-identifier="letter" onClick={() => {click(letra, index)}} className={listKeys.includes(index) || statusKeyboard ? "teclaOff" : "teclaOn"} key={index}>{letra.toUpperCase()}</button>)}</div>
+            <div className="teclado">{alfabeto.map((letra, index) => <button disabled = {statusInput} data-identifier="letter" onClick={() => {click(letra, index)}} className={listKeys.includes(index) || statusKeyboard ? "teclaOff" : "teclaOn"} key={index}>{letra.toUpperCase()}</button>)}</div>
 
             <div className="chute">
                 <span>Já sei a palavra!</span>
-                <input disabled = {statusKeyboard} data-identifier="type-guess" type="text" placeholder="Dê o seu palpite"></input>
-                <button disabled = {statusKeyboard} data-identifier="guess-button" >Chutar</button>
+                <input disabled = {statusInput} value={inputValue} onChange ={(event) => setInputValue(event.target.value)} data-identifier="type-guess" type="form" placeholder="Dê o seu palpite"></input>
+                <button disabled = {statusInput} onClick={verificaChute} type="input" data-identifier="guess-button" >Chutar</button>
             </div>
         </div>
     )
