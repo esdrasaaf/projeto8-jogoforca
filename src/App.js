@@ -22,7 +22,6 @@ export default function App() {
     let [palavraSecretaClass, setClass] = useState("hide")
     let [indice, setIndice] = useState(0)
     let [erros, setErros] = useState()
-    let [acertos, setAcertos] = useState()
     let palavraRandom = palavras[indice]
     let arrayCaracteres = palavraRandom.split('')
     const arrayCaracteresSemAcento = []
@@ -40,7 +39,6 @@ export default function App() {
             }
             return "oi"
         });
-        
     }
 
     function startGame() {
@@ -50,7 +48,6 @@ export default function App() {
             setStatusInput(statusInput = false)
             setIndice(indice = Math.floor(Math.random() * palavras.length))
             setErros(erros = 0)
-            setAcertos(0)
             setBtnEscolher(btnEscolher = "Mudar palavra")
         } else if (erros !== undefined){
             setStatusImg(statusImg = img0)
@@ -60,7 +57,6 @@ export default function App() {
             setListKeys([])
             setListLetters([])
             setErros(erros = 0)
-            setAcertos(0)
             if (btnEscolher === "Tentar Novamente") {
                 setBtnEscolher(btnEscolher = "Mudar palavra")
                 setClass(palavraSecretaClass = "palavra-secreta")
@@ -84,8 +80,8 @@ export default function App() {
 
             if(erros !== undefined && arrayCaracteresSemAcento.includes(letra)){
                 variavel = [...listLetters, letra]
+                console.log(arrayCaracteresSemAcento)
                 setListLetters(variavel)
-                setAcertos(acertos += 1)
             } else if(erros !== undefined && !arrayCaracteresSemAcento.includes(letra)) {
                 setErros(erros += 1)
                 switch (erros) {
@@ -94,13 +90,19 @@ export default function App() {
                     case 3: setStatusImg(statusImg = img3); break;
                     case 4: setStatusImg(statusImg = img4); break;
                     case 5: setStatusImg(statusImg = img5); break;
-                    case 6: setStatusImg(statusImg = img6); setBtnEscolher(btnEscolher = "Tentar Novamente"); setClass(palavraSecretaClass = "perdeu"); arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))}); setStatusInput(statusInput = true); setStatusKeyboard(statusKeyboard = true); break;
+                    case 6: setStatusImg(statusImg = img6); 
+                    setBtnEscolher(btnEscolher = "Tentar Novamente"); 
+                    setClass(palavraSecretaClass = "perdeu");
+                    arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))}); 
+                    setStatusInput(statusInput = true); 
+                    setStatusKeyboard(statusKeyboard = true); break;
                     default: break;
                 }
             }
             
             const palavraAtual = palavraRandom.split("").map(e => variavel.includes(e.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) ? e : "_").join("");
-            if (palavraAtual === palavraRandom){
+            console.log(palavraAtual)
+            if (palavraAtual === palavraRandom && erros <= 5){
                 setClass(palavraSecretaClass = "ganhou");
                 setBtnEscolher(btnEscolher = "Nova Palavra"); 
                 setStatusKeyboard(statusKeyboard = true)
