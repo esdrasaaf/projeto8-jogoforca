@@ -15,24 +15,26 @@ import styled from 'styled-components';
 let variavel = [];
 
 export default function App() {
+    // VARIÁVEIS //
     const [listKeys, setListKeys] = useState([])
     const [listLetters, setListLetters] = useState([])    
-    let [statusImg, setStatusImg] = useState(img0)
-    let [statusKeyboard, setStatusKeyboard] = useState(true)
-    let [statusInput, setStatusInput] = useState(true)
-    let [btnEscolher, setBtnEscolher] = useState("Escolher palavra")
-    let [palavraSecretaClass, setClass] = useState("hide")
-    let [indice, setIndice] = useState(0)
-    let [erros, setErros] = useState()
-    let palavraRandom = palavras[indice]
-    let arrayCaracteres = palavraRandom.split('')
+    const [statusImg, setStatusImg] = useState(img0)
+    const [statusKeyboard, setStatusKeyboard] = useState(true)
+    const [statusInput, setStatusInput] = useState(true)
+    const [greenBtn, setGreenBtn] = useState("Escolher palavra")
+    const [secretWordClass, setClass] = useState("hide")
+    const [index, setIndex] = useState(0)
     const arrayCaracteresSemAcento = []
     const [inputValue, setInputValue] = useState('')
+    const palavraRandom = palavras[index]
+    const arrayCaracteres = palavraRandom.split('')
     let palavraSemAcentos = palavraRandom.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
     let arrayTraço = [];
+    let [mistakes, setMistakes] = useState()
     console.log(palavraRandom)
     
-    if(erros !== undefined) {
+    //Parte de verificar quando ganhou
+    if(mistakes !== undefined) {
         arrayCaracteres.map((letra) => {
             if(variavel.includes(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))) {
                 arrayTraço.push(letra)
@@ -44,27 +46,28 @@ export default function App() {
     }
 
     function startGame() {
-        if(erros === undefined && indice === 0 && statusKeyboard === true){
-            setClass(palavraSecretaClass = "palavra-secreta")
-            setStatusKeyboard(statusKeyboard = false)
-            setStatusInput(statusInput = false)
-            setIndice(indice = Math.floor(Math.random() * palavras.length))
-            setErros(erros = 0)
-            setBtnEscolher(btnEscolher = "Mudar palavra")
-        } else if (erros !== undefined){
-            setStatusImg(statusImg = img0)
-            setIndice(indice = Math.floor(Math.random() * palavras.length))
-            setStatusKeyboard(statusKeyboard = false)
-            setStatusInput(statusInput = false)
+        //Quando o jogo começa ; Quando o jogo é resetado
+        if(mistakes === undefined && index === 0 && statusKeyboard === true){
+            setClass("palavra-secreta")
+            setStatusKeyboard(false)
+            setStatusInput(false)
+            setIndex(Math.floor(Math.random() * palavras.length))
+            setMistakes(mistakes = 0)
+            setGreenBtn("Mudar palavra")
+        } else if (mistakes !== undefined){
+            setStatusImg(img0)
+            setIndex(Math.floor(Math.random() * palavras.length))
+            setStatusKeyboard(false)
+            setStatusInput(false)
             setListKeys([])
             setListLetters([])
-            setErros(erros = 0)
-            if (btnEscolher === "Tentar Novamente") {
-                setBtnEscolher(btnEscolher = "Mudar palavra")
-                setClass(palavraSecretaClass = "palavra-secreta")
-            } else if (btnEscolher === "Nova Palavra") {
-                setBtnEscolher(btnEscolher = "Mudar palavra")
-                setClass(palavraSecretaClass = "palavra-secreta")
+            setMistakes(mistakes = 0)
+            if (greenBtn === "Tentar Novamente") {
+                setGreenBtn("Mudar palavra")
+                setClass("palavra-secreta")
+            } else if (greenBtn === "Nova Palavra") {
+                setGreenBtn("Mudar palavra")
+                setClass("palavra-secreta")
             }
         }
     }    
@@ -72,7 +75,7 @@ export default function App() {
     function click(letra, index) {
 
         //Click de apagar a tecla
-        if (erros !== undefined && !listKeys.includes(index)) {
+        if (mistakes !== undefined && !listKeys.includes(index)) {
             setListKeys([...listKeys, index])
 
             //Click de acerto e Erro ; Quando perde
@@ -80,35 +83,34 @@ export default function App() {
                 arrayCaracteresSemAcento.push(arrayCaracteres[i].normalize('NFD').replace(/[\u0300-\u036f]/g, ""))
             }
 
-            if(erros !== undefined && arrayCaracteresSemAcento.includes(letra)){
+            if(mistakes !== undefined && arrayCaracteresSemAcento.includes(letra)){
                 variavel = [...listLetters, letra]
-                console.log(arrayCaracteresSemAcento)
                 setListLetters(variavel)
-            } else if(erros !== undefined && !arrayCaracteresSemAcento.includes(letra)) {
-                setErros(erros += 1)
-                switch (erros) {
-                    case 1: setStatusImg(statusImg = img1); break;
-                    case 2: setStatusImg(statusImg = img2); break;
-                    case 3: setStatusImg(statusImg = img3); break;
-                    case 4: setStatusImg(statusImg = img4); break;
-                    case 5: setStatusImg(statusImg = img5); break;
-                    case 6: setStatusImg(statusImg = img6); 
-                    setBtnEscolher(btnEscolher = "Tentar Novamente"); 
-                    setClass(palavraSecretaClass = "perdeu");
+            } else if(mistakes !== undefined && !arrayCaracteresSemAcento.includes(letra)) {
+                setMistakes(mistakes += 1)
+                switch (mistakes) {
+                    case 1: setStatusImg(img1); break;
+                    case 2: setStatusImg(img2); break;
+                    case 3: setStatusImg(img3); break;
+                    case 4: setStatusImg(img4); break;
+                    case 5: setStatusImg(img5); break;
+                    case 6: setStatusImg(img6); 
+                    setGreenBtn("Tentar Novamente"); 
+                    setClass("perdeu");
                     arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))}); 
-                    setStatusInput(statusInput = true); 
-                    setStatusKeyboard(statusKeyboard = true); break;
+                    setStatusInput(true); 
+                    setStatusKeyboard(true); break;
                     default: break;
                 }
             }
             
+            //Quando ganha 
             const palavraAtual = palavraRandom.split("").map(e => variavel.includes(e.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) ? e : "_").join("");
-            console.log(palavraAtual)
-            if (palavraAtual === palavraRandom && erros <= 5){
-                setClass(palavraSecretaClass = "ganhou");
-                setBtnEscolher(btnEscolher = "Nova Palavra"); 
-                setStatusKeyboard(statusKeyboard = true)
-                setStatusInput(statusInput = true)
+            if (palavraAtual === palavraRandom && mistakes <= 5){
+                setClass("ganhou");
+                setGreenBtn("Nova Palavra"); 
+                setStatusKeyboard(true)
+                setStatusInput(true)
                 arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))})
                 setListKeys([])
             }            
@@ -118,30 +120,32 @@ export default function App() {
     function verificaChute() {
         const palavraChutada = inputValue
         setInputValue('')
+
+        //Quando chutou vazio ; Quando chutou e ganhou ; Quando chutou e perdeu
         if(palavraChutada === '') {
             alert("Escreva algo antes de chutar")
         } else if(palavraChutada.toLowerCase()  === palavraRandom || palavraChutada.toLowerCase() === palavraSemAcentos) {
-            setClass(palavraSecretaClass = "ganhou");
-            setBtnEscolher(btnEscolher = "Nova Palavra"); 
-            setStatusKeyboard(statusKeyboard = true)
-            setStatusInput(statusInput = true)
+            setClass("ganhou");
+            setGreenBtn("Nova Palavra"); 
+            setStatusKeyboard(true)
+            setStatusInput(true)
             arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))})
             setListKeys([])
         } else {
-            setStatusImg(statusImg = img6);
-            setBtnEscolher(btnEscolher = "Tentar Novamente"); 
-            setClass(palavraSecretaClass = "perdeu"); 
+            setStatusImg(img6);
+            setGreenBtn("Tentar Novamente"); 
+            setClass("perdeu"); 
             arrayCaracteres.forEach(letra => {listLetters.push(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))});
             setListKeys([])
-            setStatusKeyboard(statusKeyboard = true)
-            setStatusInput(statusInput = true)
+            setStatusKeyboard(true)
+            setStatusInput(true)
         } 
     }
 
     return (
         <> 
             <GlobalStyle></GlobalStyle> 
-            <Root>     
+            <Root>
                 <Content>
                     <GameTitle>
                         <span>Jogo da Forca</span>
@@ -152,11 +156,11 @@ export default function App() {
                         <img data-identifier="game-image" className="forcaImg" src={statusImg} alt="Imagem de uma forca"/>
                         <RightPart>
                             <button data-identifier="choose-word" onClick={startGame}>
-                                {btnEscolher}
+                                {greenBtn}
                             </button>
                             <ul 
                                 data-identifier="word" 
-                                className = {palavraSecretaClass} >
+                                className = {secretWordClass} >
                                     {arrayCaracteres.map((letra, index) => 
                                         <li key={index}>
                                             {listLetters.includes(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) ? `${letra}` : "_"}
@@ -217,7 +221,7 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 810px;
+    height: 90%;
     width: 1000px;
     margin: 0 auto;
     padding: 20px;
@@ -276,6 +280,10 @@ const RightPart = styled.div`
         position: absolute;
         right: 25px;
         top: -5px;
+
+        &:hover {
+            background-color: #2E8B57;
+        }
     }
     
     .hide {
@@ -283,15 +291,15 @@ const RightPart = styled.div`
     }
 
     .palavra-secreta {
-    font-family: 'RocknRoll One', sans-serif;
-    display: flex;
-    letter-spacing: 15px;
-    font-weight: 500;
-    font-size: 40px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 30px;
-    margin-left: 80px;
+        font-family: 'RocknRoll One', sans-serif;
+        display: flex;
+        letter-spacing: 15px;
+        font-weight: 500;
+        font-size: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 30px;
+        margin-left: 80px;
     }
 
     .ganhou {
@@ -362,7 +370,11 @@ const Keyboard = styled.div`
         border-radius: 5px;
         font-weight: bold;
         font-family: 'Roboto', sans-serif;
-        font-size: large;
+        font-size: large;   
+        
+        &:hover {
+        background-color: rgb(173, 203, 225);
+        }
     }
 `
 const Attempt = styled.div`
@@ -401,5 +413,9 @@ const Attempt = styled.div`
         border-color: rgb(173, 203, 225);
         color: rgb(76, 112, 145);
         background-color: rgb(224, 236, 243);
+
+        &:hover {
+            background-color: #ADD8E6;
+        }
     }
 `
