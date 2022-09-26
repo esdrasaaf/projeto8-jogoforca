@@ -140,67 +140,77 @@ export default function App() {
 
     return (
         <> 
-            <GlobalStyle></GlobalStyle>       
-            <Content>
-                <GameTitle>
-                    <span>Jogo da Forca</span>
-                    <img src={imgTop} alt="Emogi forca"/>
-                </GameTitle>
-                
-                <TopContent>
-                    <img data-identifier="game-image" className="forcaImg" src={statusImg} alt="Imagem de uma forca"/>
-                    <RightPart>
-                        <button data-identifier="choose-word" onClick={startGame}>
-                            {btnEscolher}
-                        </button>
-                        <ul 
-                            data-identifier="word" 
-                            className = {palavraSecretaClass} >
-                                {arrayCaracteres.map((letra, index) => 
-                                    <li key={index}>
-                                        {listLetters.includes(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) ? `${letra}` : "_"}
-                                    </li>
-                                )}
-                        </ul>
-                    </RightPart>
-                </TopContent>
+            <GlobalStyle></GlobalStyle> 
+            <Root>     
+                <Content>
+                    <GameTitle>
+                        <span>Jogo da Forca</span>
+                        <img src={imgTop} alt="Emogi forca"/>
+                    </GameTitle>
+                    
+                    <TopContent>
+                        <img data-identifier="game-image" className="forcaImg" src={statusImg} alt="Imagem de uma forca"/>
+                        <RightPart>
+                            <button data-identifier="choose-word" onClick={startGame}>
+                                {btnEscolher}
+                            </button>
+                            <ul 
+                                data-identifier="word" 
+                                className = {palavraSecretaClass} >
+                                    {arrayCaracteres.map((letra, index) => 
+                                        <li key={index}>
+                                            {listLetters.includes(letra.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) ? `${letra}` : "_"}
+                                        </li>
+                                    )}
+                            </ul>
+                        </RightPart>
+                    </TopContent>
 
-                <Keyboard>
-                    {alfabeto.map((letra, index) => 
+                    <Keyboard>
+                        {alfabeto.map((letra, index) => 
+                            <button 
+                                disabled = {statusInput} 
+                                data-identifier="letter" 
+                                onClick={() => {click(letra, index)}} 
+                                className={listKeys.includes(index) || statusKeyboard ? "teclaOff" : "teclaOn"} 
+                                key={index}>
+                                {letra.toUpperCase()}
+                            </button>)}
+                    </Keyboard>
+
+                    <Attempt>
+                        <span>Já sei a palavra!</span>
+                        <input 
+                            disabled = {statusInput} 
+                            value={inputValue} 
+                            onChange ={(event) => setInputValue(event.target.value)} 
+                            data-identifier="type-guess" 
+                            type="form" 
+                            placeholder="Dê o seu palpite">
+                        </input>
                         <button 
                             disabled = {statusInput} 
-                            data-identifier="letter" 
-                            onClick={() => {click(letra, index)}} 
-                            className={listKeys.includes(index) || statusKeyboard ? "teclaOff" : "teclaOn"} 
-                            key={index}>
-                            {letra.toUpperCase()}
-                        </button>)}
-                </Keyboard>
-
-                <Attempt>
-                    <span>Já sei a palavra!</span>
-                    <input 
-                        disabled = {statusInput} 
-                        value={inputValue} 
-                        onChange ={(event) => setInputValue(event.target.value)} 
-                        data-identifier="type-guess" 
-                        type="form" 
-                        placeholder="Dê o seu palpite">
-                    </input>
-                    <button 
-                        disabled = {statusInput} 
-                        onClick={verificaChute} 
-                        type="input" 
-                        data-identifier="guess-button">Chutar
-                    </button>
-                </Attempt>
-            </Content>
+                            onClick={verificaChute} 
+                            type="input" 
+                            data-identifier="guess-button">Chutar
+                        </button>
+                    </Attempt>
+                </Content>
+            </Root> 
         </>
 
     )
 }
 
 //Styleds Components//
+const Root = styled.div`
+    background-color: rgb(155, 164, 172);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
 const Content = styled.div`
     background-color: rgb(224, 222, 222);
     box-sizing: border-box;
