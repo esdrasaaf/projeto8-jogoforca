@@ -220,7 +220,7 @@ const Root = styled.div`
         height: 100%;
     }
 
-    //Responsividade Celular
+    //Responsividade Intermediária
     @media (max-width: 800px) {
         height: 100%;
     }
@@ -245,7 +245,7 @@ const Content = styled.div`
         border: none;
     }
 
-    //Responsividade Celular
+    //Responsividade Intermediária
     @media (max-width: 800px) {
         width: 100%;
         height: 100%;
