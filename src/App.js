@@ -214,6 +214,16 @@ const Root = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    //Responsividade Celular
+    @media (max-width: 500px) {
+        height: 100%;
+    }
+
+    //Responsividade Celular
+    @media (max-width: 800px) {
+        height: 100%;
+    }
 `
 const Content = styled.div`
     background-color: rgb(224, 222, 222);
@@ -227,6 +237,25 @@ const Content = styled.div`
     padding: 20px;
     border: solid 10px rgb(37, 36, 36);
     border-radius: 10px;
+
+    //Responsividade Celular
+    @media (max-width: 500px) {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    //Responsividade Celular
+    @media (max-width: 800px) {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    //Responsividade Tablet
+    @media (max-width: 1000px) {
+       height: 95%;
+    }
 `
 const GameTitle = styled.div`
     display: flex;
@@ -235,8 +264,18 @@ const GameTitle = styled.div`
     width: 400px;
     margin-bottom: 20px;
 
+    //Responsividade Celular
+    @media (max-width: 500px) {
+            width: 280px;
+        }
+
     img {
         height: 80px;
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+            height: 60px;
+        }
     }
 
     span {
@@ -244,6 +283,11 @@ const GameTitle = styled.div`
         font-size: 40px;
         font-family: 'RocknRoll One';
         color: rgb(63, 62, 62);
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+            font-size: 28px;
+        }
     }
 `
 const TopContent = styled.div`
@@ -253,17 +297,59 @@ const TopContent = styled.div`
     margin-bottom: 40px;
     margin-top: 10px;
 
+    //Responsividade Celular
+    @media (max-width: 500px) {
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    //Responsividade Intermediária
+    @media (max-width: 800px) {
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
     img {
         width: 300px;
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+            width: 85%;
+            margin: 0 auto;
+        }
+
+        //Responsividade Intermediária
+        @media (max-width: 800px) {
+            width: 45%;
+            margin: 0 auto;
+        }
+
+
+        //Responsividade Tablet
+        @media (max-width: 1000px) {
+            width: 270px;
+        }
     }
 `
 const RightPart = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     position: relative;
     justify-content: flex-end;
     width: 100%;
+
+    //Responsividade Celular
+    @media (max-width: 500px) {
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    //Responsividade Intermediária
+    @media (max-width: 800px) {
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
 
     button {
         background-color: rgb(38, 175, 96);
@@ -280,6 +366,18 @@ const RightPart = styled.div`
         position: absolute;
         right: 25px;
         top: -5px;
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+            position: initial;
+            margin-bottom: 30px;
+        }
+
+        //Responsividade Intermediária
+        @media (max-width: 800px) {
+            position: initial;
+            margin-bottom: 30px;
+        }
 
         &:hover {
             background-color: #2E8B57;
@@ -300,6 +398,18 @@ const RightPart = styled.div`
         justify-content: center;
         margin-bottom: 30px;
         margin-left: 80px;
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+            margin-left: 15px;
+            font-size: 35px;
+        }
+
+        //Responsividade Intermediária
+        @media (max-width: 800px) {
+            margin-left: 15px;
+            font-size: 35px;
+        }
     }
 
     .ganhou {
@@ -313,6 +423,18 @@ const RightPart = styled.div`
         margin-bottom: 30px;
         margin-left: 80px;
         color: green;
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+            margin-left: 15px;
+            font-size: 35px;
+        }
+
+        //Responsividade Intermediária
+        @media (max-width: 800px) {
+            margin-left: 15px;
+            font-size: 35px;
+        }
     }
 
     .perdeu {
@@ -325,7 +447,19 @@ const RightPart = styled.div`
         justify-content: center;
         margin-bottom: 30px;
         margin-left: 80px;
-        color: red
+        color: red;
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+            margin-left: 15px;
+            font-size: 35px;
+        }
+
+        //Responsividade Intermediária
+        @media (max-width: 800px) {
+            margin-left: 15px;
+            font-size: 35px;
+        }
     }
 `
 const Keyboard = styled.div`
@@ -340,6 +474,11 @@ const Keyboard = styled.div`
     padding: 10px;
     border-radius: 8px;
     border: solid 1px rgb(73, 73, 73);
+
+    //Responsividade Tablet
+        @media (max-width: 1000px) {
+        width: 90%;
+    }
 
     .teclaOff{
         color: rgb(107, 105, 103);
@@ -390,6 +529,20 @@ const Attempt = styled.div`
         cursor: default;
         margin-left: 30px;
         font-family: 'Varela Round', sans-serif;
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+            margin-left: 0;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        //Responsividade Intermediária
+        @media (max-width: 800px) {
+            margin-left: 0;
+            margin-right: 10px;
+            text-align: center;
+        }
     }
 
     input {
@@ -399,6 +552,21 @@ const Attempt = styled.div`
         border-radius: 10px;
         text-align: center;
         font-family: 'RocknRoll One', sans-serif;
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+           width: 50%;
+        }
+
+        //Responsividade Intermediária
+        @media (max-width: 800px) {
+            width: 50%;
+        }
+
+        //Responsividade Tablet
+        @media (max-width: 1000px) {
+            width: 50%;
+        }
     }
 
     button {
@@ -413,6 +581,17 @@ const Attempt = styled.div`
         border-color: rgb(173, 203, 225);
         color: rgb(76, 112, 145);
         background-color: rgb(224, 236, 243);
+
+        //Responsividade Celular
+        @media (max-width: 500px) {
+            margin-left: 15px;
+            margin-right: 0;
+        }
+
+        //Responsividade Intermediária
+        @media (max-width: 800px) {
+            margin-right: 0px;
+        }
 
         &:hover {
             background-color: #ADD8E6;
